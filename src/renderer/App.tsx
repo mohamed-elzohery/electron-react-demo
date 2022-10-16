@@ -1,50 +1,22 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import classes from './App.module.css';
+import { ScreenCtx } from './context/ScreenContext/ScreenCtx';
+import Final from './screens/final/Final';
+import QuizScreen from './screens/quiz/QuizScreen';
+import StartScreen from './screens/start/Start';
 
-const Hello = () => {
-  return (
-    <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
-  );
-};
 
-export default function App() {
+function App() {
+  const { isQuizOpen, isFinalOpen } = useContext(ScreenCtx);
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
+   <div className={classes.container}>
+    <main className={classes.main}>
+        {isQuizOpen && <QuizScreen />}
+        {isFinalOpen && <Final />}
+        {!isFinalOpen && !isQuizOpen && <StartScreen />}
+    </main>
+   </div>
   );
 }
+
+export default App;
